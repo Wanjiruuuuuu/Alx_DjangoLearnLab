@@ -1,3 +1,5 @@
+from django.db import models
+
 class Author(models.Model):
     name = models.CharField(max_length=255)
 
@@ -28,7 +30,6 @@ class Librarian(models.Model):
         return self.name
 
 from django.contrib.auth.models import User
-from django.db import models
 
 class UserProfile(models.Model):
     USER_ROLES = (
