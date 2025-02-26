@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 from .models import Book, Library
 
@@ -33,6 +33,7 @@ def list_books(request):
     books = Book.objects.all()
     context = {"books": books}
     return render(request, "relationship_app/list_books.html", context)
+
 class LibraryDetailView(DetailView):
     model = Library
     template_name = "relationship_app/library_detail.html"
@@ -66,14 +67,17 @@ def LogoutView(request):
     return render(request, "registration/logout.html")
 
 # Role-based views
+@login_required
 @user_passes_test(lambda u: u.userprofile.role == 'Admin')
 def admin_view(request):
     return render(request, "relationship_app/admin_view.html")
 
+@login_required
 @user_passes_test(lambda u: u.userprofile.role == 'Librarian')
 def librarian_view(request):
     return render(request, "relationship_app/librarian_view.html")
 
+@login_required
 @user_passes_test(lambda u: u.userprofile.role == 'Member')
 def member_view(request):
     return render(request, "relationship_app/member_view.html")
