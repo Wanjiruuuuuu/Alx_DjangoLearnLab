@@ -9,7 +9,8 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import user_passes_test, login_required
 
-from .models import Book, Library
+from .models import Book, Library  # Importing Library model
+from .models import Library  # Ensure Library model is imported
 
 # Create your views here.
 from django.contrib.auth.decorators import permission_required
@@ -37,6 +38,11 @@ def list_books(request):
 class LibraryDetailView(DetailView):
     model = Library
     template_name = "relationship_app/library_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['books'] = self.object.books.all()  # Add books to context
+        return context
 
 def register(request):
     form = UserCreationForm()
