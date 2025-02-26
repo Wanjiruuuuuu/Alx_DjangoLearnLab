@@ -11,16 +11,13 @@ ROLE_CHOICES = [
 ]
 
 class UserProfile(models.Model):
-    
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Member')
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
 
-# Create your models here.
 class Author(models.Model):
-
     name = models.CharField(max_length=200)
 
     def __str__(self):
@@ -40,8 +37,6 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-
-
 class Library(models.Model):
     name = models.CharField(max_length=200)
     books = models.ManyToManyField(Book)
@@ -55,8 +50,6 @@ class Librarian(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
 # Automatically create a UserProfile when a new User is registered
 @receiver(post_save, sender=User)
