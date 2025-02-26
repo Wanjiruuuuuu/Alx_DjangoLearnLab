@@ -12,11 +12,27 @@ from django.contrib.auth.decorators import user_passes_test
 from .models import Book, Library
 
 # Create your views here.
+from django.contrib.auth.decorators import permission_required
+
+@permission_required('relationship_app.can_add_book')
+def add_book(request):
+    # Logic for adding a book
+    pass
+
+@permission_required('relationship_app.can_change_book')
+def edit_book(request, book_id):
+    # Logic for editing a book
+    pass
+
+@permission_required('relationship_app.can_delete_book')
+def delete_book(request, book_id):
+    # Logic for deleting a book
+    pass
+
 def list_books(request):
     books = Book.objects.all()
     context = {"books": books}
     return render(request, "relationship_app/list_books.html", context)
-
 class LibraryDetailView(DetailView):
     model = Library
     template_name = "relationship_app/library_detail.html"
