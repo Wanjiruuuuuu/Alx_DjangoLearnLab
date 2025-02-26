@@ -67,7 +67,6 @@ def LogoutView(request):
     return render(request, "registration/logout.html")
 
 # Role-based views
-# Role-based views
 @login_required
 @user_passes_test(lambda u: u.userprofile.role == 'Admin')
 def admin_view(request):

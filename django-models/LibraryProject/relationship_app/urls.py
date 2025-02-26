@@ -3,7 +3,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 from .views import list_books
 from .views import LibraryDetailView
+from .views import LibraryDetailView  # Ensure LibraryDetailView is imported
 from . import views
+
+urlpatterns = [
+    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),  # Add URL pattern for LibraryDetailView
+]
 from .views import add_book, edit_book, delete_book
 from .views import admin_view, librarian_view, member_view
 from .views import admin_view, librarian_view, member_view
