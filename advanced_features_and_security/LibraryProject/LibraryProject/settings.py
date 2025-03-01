@@ -23,7 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-l^#ft8_b+-50=2v#6*kcp%h%hj^^ae-&88=_0cgknv!vixxtnj"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # Set to False for production to prevent exposure of sensitive information.
+
+# Security settings to prevent XSS and other vulnerabilities
+SECURE_BROWSER_XSS_FILTER = True  # Enable XSS filtering.
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking by denying framing.
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent browsers from MIME-sniffing.
+CSRF_COOKIE_SECURE = True  # Ensure CSRF cookies are only sent over HTTPS.
+SESSION_COOKIE_SECURE = True  # Ensure session cookies are only sent over HTTPS.
 
 ALLOWED_HOSTS = []
 
@@ -43,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django_csp.middleware.CSPMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -114,7 +122,12 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Content Security Policy
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com")
+CSP_FONT_SRC = ("'self'", "https://fonts.gstatic.com")
+CSP_IMG_SRC = ("'self'", "data:")
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
