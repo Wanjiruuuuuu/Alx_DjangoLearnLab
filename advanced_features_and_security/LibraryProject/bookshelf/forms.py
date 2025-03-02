@@ -10,3 +10,6 @@ class BookForm(forms.ModelForm):
             'author': forms.TextInput(attrs={'required': 'required'}),
             'publication_year': forms.NumberInput(attrs={'required': 'required'}),
         }
+
+class ExampleForm(forms.Form):
+    example_field = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter example'}))

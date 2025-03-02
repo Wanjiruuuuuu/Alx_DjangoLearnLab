@@ -53,8 +53,10 @@ class UserProfile(models.Model):
         ("Member", "Member"),
     )
 
+    from django.conf import settings  # Import settings
+
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="userprofile"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="userprofile"
     )
     role = models.CharField(max_length=255, choices=USER_ROLES)
 

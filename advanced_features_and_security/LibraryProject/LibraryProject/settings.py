@@ -32,7 +32,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent browsers from MIME-sniffing.
 CSRF_COOKIE_SECURE = True  # Ensure CSRF cookies are only sent over HTTPS.
 SESSION_COOKIE_SECURE = True  # Ensure session cookies are only sent over HTTPS.
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # Allow requests from localhost for testing
 
 
 # Application definition
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "django_csp.middleware.CSPMiddleware",
+    #"django_csp.middleware.CSPMiddleware",  # Commented out to disable CSP middleware
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
