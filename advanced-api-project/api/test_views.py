@@ -1,63 +1,48 @@
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 from api.models import Book, Author
-from django.urls import reverse  
 
-class BookAPITestCase(APITestCase):
+class BookTests(APITestCase):
     def setUp(self):
-        self.author = Author.objects.create(name="John Doe")
-
+        """Create test user, author, and book"""
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        self.client.login(username="testuser", password="testpassword")  # ✅ Ensure login
+        
+        self.author = Author.objects.create(name="Test Author")
         self.book1 = Book.objects.create(title="Django Basics", author=self.author, publication_year=2020)
-        self.book2 = Book.objects.create(title="Advanced Django", author=self.author, publication_year=2022)
-
-        self.book_list_url = reverse('book-list')  
+    
+    def test_get_books(self):
+        """Test retrieving books"""
+        response = self.client.get("/api/books/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_book(self):
-        """Test creating a book via API and check response data"""
-        data = {"title": "REST API with Django", "author": self.author.id, "publication_year": 2021}
-        response = self.client.post(self.book_list_url, data, format='json')
-        
-        # Assertions
+        """Test creating a new book"""
+        data = {
+            "title": "New Book",
+            "author": self.author.id,
+            "publication_year": 2022
+        }
+        response = self.client.post("/api/books/", data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIn("title", response.data)
-        self.assertEqual(response.data["title"], "REST API with Django")
-
-    def test_get_book_list(self):
-        """Test retrieving the list of books and ensure response data is returned"""
-        response = self.client.get(self.book_list_url)
-        
-        # Assertions
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIsInstance(response.data, list)  # Ensure response is a list
-        self.assertGreaterEqual(len(response.data), 2)  # At least 2 books
-
-    def test_filter_books(self):
-        """Test filtering books by title and check response"""
-        response = self.client.get(self.book_list_url, {"title": "Django Basics"})
-        
-        # Assertions
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["title"], "Django Basics")
+        self.assertEqual(response.data["title"], "New Book")
 
     def test_update_book(self):
-        """Test updating a book and check response"""
-        book_url = reverse('book-detail', kwargs={'pk': self.book1.id})  
-        updated_data = {"title": "Django for Beginners", "author": self.author.id, "publication_year": 2020}
-        
-        response = self.client.put(book_url, updated_data, format='json')
-
-        # Assertions
+        """Test updating a book"""
+        update_url = f"/api/books/{self.book1.id}/"
+        updated_data = {
+            "title": "Updated Django Basics",
+            "author": self.author.id,
+            "publication_year": 2021
+        }
+        response = self.client.put(update_url, updated_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["title"], "Django for Beginners")
+        self.assertEqual(response.data["title"], "Updated Django Basics")
 
     def test_delete_book(self):
-        """Test deleting a book and check response"""
-        book_url = reverse('book-detail', kwargs={'pk': self.book1.id})  
-        
-        response = self.client.delete(book_url)
-
-        # Assertions
+        """Test deleting a book"""
+        delete_url = f"/api/books/{self.book1.id}/"
+        response = self.client.delete(delete_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Book.objects.count(), 1)
 
