@@ -1,4 +1,6 @@
 from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APITestCase
 from api.models import Book, Author
 
 class BookAPITestCase(TestCase):
