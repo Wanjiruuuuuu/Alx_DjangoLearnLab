@@ -1,40 +1,49 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics
 from .models import Book
 from .serializers import BookSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
-class BookListView(APIView):
-    def get(self, request):
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
-        return Response(serializer.data)
+class BookListView(generics.ListAPIView):
+    """
+    View to list all books in the system.
+    """
 
-class BookDetailView(APIView):
-    def get(self, request, pk):
-        book = Book.objects.get(pk=pk)
-        serializer = BookSerializer(book)
-        return Response(serializer.data)
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
-class BookCreateView(APIView):
-    def post(self, request):
-        serializer = BookSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class BookDetailView(generics.RetrieveAPIView):
+    """
+    View to retrieve a single book by its ID.
+    """
 
-class BookUpdateView(APIView):
-    def put(self, request, pk):
-        book = Book.objects.get(pk=pk)
-        serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
-class BookDeleteView(APIView):
-    def delete(self, request, pk):
-        book = Book.objects.get(pk=pk)
-        book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class BookCreateView(generics.CreateAPIView):
+    """
+    View to create a new book.
+    """
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+class BookUpdateView(generics.UpdateAPIView):
+    """
+    View to update an existing book.
+    """
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+class BookDeleteView(generics.DestroyAPIView):
+    """
+    View to delete a book.
+    """
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
