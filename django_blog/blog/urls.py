@@ -6,6 +6,7 @@ from blog import views
 from .views import PostListView  # Import the view you want as home
 from .views import CommentCreateView, CommentUpdateView, CommentDeleteView
 from .views import search_posts, posts_by_tag
+from .views import PostByTagListView as Listview 
 from .views import(
     PostListView,
     PostDetailView,
@@ -38,6 +39,9 @@ urlpatterns = [
     path('tags/<slug:tag_slug>/', posts_by_tag, name='posts_by_tag'),
 
     path("search/", search_posts, name="search")
+
+     path("tags/<slug:tag_slug>/", PostByTagListView.as_view(), name="post_by_tag"),
+ 
 
 ]
 
