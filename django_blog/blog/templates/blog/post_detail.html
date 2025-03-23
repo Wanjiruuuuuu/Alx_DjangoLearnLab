@@ -10,3 +10,7 @@
     {% endif %}
 {% endblock %}
 {% include 'blog/comments_section.html' %}
+
+{% for tag in post.tags.all %}
+    <a href="{% url 'posts_by_tag' tag.slug %}">{{ tag.name }}</a>
+{% endfor %}
