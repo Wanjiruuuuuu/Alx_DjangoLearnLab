@@ -13,8 +13,7 @@ urlpatterns = [
     path("register/", CustomUserRegistrationApiView.as_view(), name="register"),
     path("logout/", CustomUserLogoutApiView.as_view(), name="logout"),
     path("api-token-auth/", CustomAuthToken.as_view(), name="get-token"),
-    # The paths below are wrong, just added them to pass the checker
-    # this was the last project so I wanted to beat time
-    path("unfollow/<int:user_id>/"),
-    path("follow/<int:user_id>/"),
+    path('follow/<int:user_id>/', FollowUserView.as_view(), name='follow-user'),
+    path('unfollow/<int:user_id>/', UnfollowUserView.as_view(), name='unfollow-user'),
+
 ]
