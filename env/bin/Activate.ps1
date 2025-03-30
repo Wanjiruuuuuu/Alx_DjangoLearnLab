@@ -28,7 +28,7 @@ Activates the Python virtual environment that contains the Activate.ps1 script,
 and shows extra information about the activation as it executes.
 
 .Example
-Activate.ps1 -VenvDir C:\Users\MyUser\Common\.venv
+Activate.ps1 -VenvDir C:/Users/MyUser/Common/.venv
 Activates the Python virtual environment located in the specified location.
 
 .Example
@@ -42,7 +42,7 @@ On Windows, it may be required to enable this Activate.ps1 script by setting the
 execution policy for the user. You can do this by issuing the following PowerShell
 command:
 
-PS C:\> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+PS C:/> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 For more information on Execution Policies: 
 https://go.microsoft.com/fwlink/?LinkID=135170
@@ -146,7 +146,7 @@ function Get-PyVenvConfig(
         $pyvenvConfigContent = Get-Content -Path $pyvenvConfigPath
 
         $pyvenvConfigContent | ForEach-Object {
-            $keyval = $PSItem -split "\s*=\s*", 2
+            $keyval = $PSItem -split "/s*=/s*", 2
             if ($keyval[0] -and $keyval[1]) {
                 $val = $keyval[1]
 
@@ -182,7 +182,7 @@ if ($VenvDir) {
 }
 else {
     Write-Verbose "VenvDir not given as a parameter, using parent directory name as VenvDir."
-    $VenvDir = $VenvExecDir.Parent.FullName.TrimEnd("\\/")
+    $VenvDir = $VenvExecDir.Parent.FullName.TrimEnd("///")
     Write-Verbose "VenvDir=$VenvDir"
 }
 
