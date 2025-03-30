@@ -83,11 +83,11 @@ WSGI_APPLICATION = "social_media_api.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "mydb",
-        "USER": config("USER"),
-        "PASSWORD": config("PASSWORD"),
-        "HOST": config("HOST"),
-        "PORT": config("PORT"),
+        "NAME": config("DB_NAME", default="your_default_db"),
+        "USER": config("USER", default="your_default_user"),
+        "PASSWORD": config("C0operative", default="your_default_password"),
+        "HOST": config("DB_HOST", default="localhost"),
+        "PORT": config("DB_PORT", default="5432"),
     }
 }
 

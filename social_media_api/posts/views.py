@@ -44,3 +44,31 @@ class FeedView(APIView):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
+@login_required
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+    if created:
+        # Create notification
+        Notification.objects.create(
+            recipient=post.user,
+            actor=request.user,
+            verb="liked",
+            target_content_type=ContentType.objects.get_for_model(post),
+            target_object_id=post.pk
+        )
+        return JsonResponse({"message": "Post liked!"}, status=201)
+
+    return JsonResponse({"message": "Already liked."}, status=400)
+
+@login_required
+def unlike_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    like = Like.objects.filter(user=request.user, post=post)
+
+    if like.exists():
+        like.delete()
+        return JsonResponse({"message": "Post unliked!"}, status=200)
+
+    return JsonResponse({"message": "You haven't liked this post."}, status=400)
