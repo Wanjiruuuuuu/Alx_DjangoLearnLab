@@ -5,6 +5,8 @@ from .views import (
     CustomUserLoginApiView,
     CustomUserRegistrationApiView,
     CustomUserLogoutApiView,
+    FollowUserView,  # Importing the missing view
+    UnfollowUserView,  # Importing the missing view
 )
 
 

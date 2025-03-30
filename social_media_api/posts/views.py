@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from .models import Post, Comment
+from rest_framework.views import APIView  # Importing the missing APIView
 from .serializers import PostSerializer, CommentSerializer
+from rest_framework.permissions import IsAuthenticated  # Importing the missing IsAuthenticated
 from .permissions import IsOwnerOrReadOnly
 
 class PostViewSet(viewsets.ModelViewSet):
