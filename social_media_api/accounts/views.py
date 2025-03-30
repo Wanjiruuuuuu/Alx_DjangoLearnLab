@@ -10,6 +10,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from .models import CustomUser
+from django.contrib.auth.models import User
 
 # serializers
 from .serializers import (
@@ -89,7 +90,50 @@ class CustomUserLogoutApiView(APIView):
 # The REST_FRAMEWORK settings should be moved to settings.py
 
 
-
 class CustomUserListAPIView(generics.GenericAPIView, generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+
+
+# Follow and Unfollow Views
+class FollowUserView(APIView):
+    """
+    Allows a user to follow another user.
+    Authentication is manually checked instead of using `permissions.IsAuthenticated`.
+    """
+    def post(self, request, username):
+        if not request.user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            user_to_follow = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        profile = request.user.profile  # Assuming a OneToOne field in Profile linked to User
+        if user_to_follow in profile.following.all():
+            return Response({"message": "Already following this user"}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile.following.add(user_to_follow)
+        return Response({"message": f"You are now following {username}"}, status=status.HTTP_200_OK)
+
+
+class UnfollowUserView(APIView):
+    """
+    Allows a user to unfollow another user.
+    """
+    def post(self, request, username):
+        if not request.user.is_authenticated:
+            return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            user_to_unfollow = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        profile = request.user.profile
+        if user_to_unfollow not in profile.following.all():
+            return Response({"message": "You are not following this user"}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile.following.remove(user_to_unfollow)
+        return Response({"message": f"You have unfollowed {username}"}, status=status.HTTP_200_OK)
