@@ -90,7 +90,7 @@ class CustomUserLogoutApiView(APIView):
 # The REST_FRAMEWORK settings should be moved to settings.py
 
 
-class CustomUserListAPIView(generics.GenericAPIView, generics.ListAPIView):
+class CustomUserListAPIView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
