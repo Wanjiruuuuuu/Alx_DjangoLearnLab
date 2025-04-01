@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Finder</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --light: #ecf0f1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .api-endpoint {
+            background: var(--light);
+            padding: 15px;
+            border-left: 4px solid var(--secondary);
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Restaurant Finder API</h1>
+        <p>Discover and review restaurants with our powerful API</p>
+    </header>
+
+    <div class="nav-links">
+        <a href="/api/restaurants/" class="btn">Browse Restaurants</a>
+        <a href="/admin/" class="btn">Admin Panel</a>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>API Documentation</h2>
+            
+            <h3>Restaurants</h3>
+            <div class="api-endpoint">
+                GET /api/restaurants/<br>
+                <small>List all restaurants</small>
+            </div>
+            
+            <div class="api-endpoint">
+                GET /api/restaurants/:id<br>
+                <small>Get specific restaurant details</small>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Quick Start</h2>
+            <ol>
+                <li>Use the <strong>Browse Restaurants</strong> link to explore</li>
+                <li>Access the admin panel to manage data</li>
+                <li>Integrate with your app using our API endpoints</li>
+            </ol>
+            
+            <h3>Example Request</h3>
+            <div class="api-endpoint">
+                fetch('/api/restaurants/1/reviews/', {<br>
+                &nbsp;&nbsp;method: 'POST',<br>
+                &nbsp;&nbsp;headers: { 'Content-Type': 'application/json' },<br>
+                &nbsp;&nbsp;body: JSON.stringify({ rating: 5, comment: "Excellent!" })<br>
+                })
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Restaurant Finder API &copy; 2025</p>
+    </footer>
+</body>
+</html>
