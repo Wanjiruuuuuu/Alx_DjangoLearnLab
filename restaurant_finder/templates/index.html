@@ -63,72 +63,70 @@
             border-radius: 5px;
             font-weight: bold;
             transition: background 0.3s;
+            cursor: pointer;
         }
         .btn:hover {
             background: #2980b9;
-        }
-        .api-endpoint {
-            background: var(--light);
-            padding: 15px;
-            border-left: 4px solid var(--secondary);
-            margin: 10px 0;
-            font-family: monospace;
         }
         footer {
             text-align: center;
             margin-top: 50px;
             color: #7f8c8d;
         }
+        #restaurant-results {
+            margin-top: 40px;
+        }
+        .restaurant-card {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .restaurant-card h3 {
+            margin-top: 0;
+        }
+        .menu-item, .review {
+            margin-left: 15px;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Restaurant Finder API</h1>
-        <p>Discover and review restaurants with our powerful API</p>
+        <h1>Welcome to Restaurant Finder</h1>
+        <p>Craving something delicious? Let us help you find the best spots to eat around you.</p>
     </header>
 
     <div class="nav-links">
-        <a href="/api/restaurants/" class="btn">Browse Restaurants</a>
-        <a href="/admin/" class="btn">Admin Panel</a>
+        <!-- Updated button with a link to the restaurant list -->
+        <a href="{% url 'restaurant-list' %}" class="btn">Find a Restaurant</a>
+        <a href="/admin/" class="btn">Profile</a>
     </div>
 
     <div class="container">
         <div class="card">
-            <h2>API Documentation</h2>
-            
-            <h3>Restaurants</h3>
-            <div class="api-endpoint">
-                GET /api/restaurants/<br>
-                <small>List all restaurants</small>
-            </div>
-            
-            <div class="api-endpoint">
-                GET /api/restaurants/:id<br>
-                <small>Get specific restaurant details</small>
-            </div>
+            <h2>Discover Amazing Places</h2>
+            <p>Explore top-rated restaurants in your area, check out their menus, and see what other food lovers are saying.</p>
+            <ul>
+                <li>Search by name, cuisine, or location</li>
+                <li>Read and write reviews</li>
+                <li>See real photos and customer ratings</li>
+            </ul>
         </div>
 
         <div class="card">
-            <h2>Quick Start</h2>
+            <h2>Get Started</h2>
             <ol>
-                <li>Use the <strong>Browse Restaurants</strong> link to explore</li>
-                <li>Access the admin panel to manage data</li>
-                <li>Integrate with your app using our API endpoints</li>
+                <li>Click "Find a Restaurant" to explore great spots nearby</li>
+                <li>Create an account to leave your own reviews</li>
+                <li>Save your favorites for next time</li>
             </ol>
-            
-            <h3>Example Request</h3>
-            <div class="api-endpoint">
-                fetch('/api/restaurants/1/reviews/', {<br>
-                &nbsp;&nbsp;method: 'POST',<br>
-                &nbsp;&nbsp;headers: { 'Content-Type': 'application/json' },<br>
-                &nbsp;&nbsp;body: JSON.stringify({ rating: 5, comment: "Excellent!" })<br>
-                })
-            </div>
         </div>
     </div>
 
     <footer>
-        <p>Restaurant Finder API &copy; 2025</p>
+        <p>Restaurant Finder &copy; 2025 | Bringing flavor to your fingertips</p>
     </footer>
+
 </body>
 </html>

@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <meta charset="UTF-8">
+    <title>Restaurants</title>
+</head>
+<body>
+    <header>
+        <h1>Restaurant Listings</h1>
+        <a href="/" class="btn">Back to Home</a>
+    </header>
+    
+    <div class="container">
+        {% for restaurant in restaurants %}
+        <div class="card">
+            <h2>{{ restaurant.name }}</h2>
+            <p><strong>Location:</strong> {{ restaurant.location }}</p>
+            <p><strong>Cuisine:</strong> {{ restaurant.cuisine }}</p>
+            <p><strong>Price:</strong> {{ restaurant.price_range }}</p>
+            <p><strong>Rating:</strong> {{ restaurant.rating }}</p>
+        </div>
+        {% empty %}
+        <p>No restaurants found.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
