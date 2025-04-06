@@ -4,7 +4,7 @@ from .views import CustomerList, RestaurantList, RestaurantDetail, MenuItemList,
 
 
 urlpatterns = [
-    path('restaurants/', RestaurantList.as_view(), name='restaurant-list'),
+    path('all/', RestaurantList.as_view(), name='restaurant-list'),
     path('<int:pk>/', RestaurantDetail.as_view(), name='restaurant-detail'),
     path('<int:restaurant_id>/menu/', MenuItemList.as_view(), name='menu-list'),
     path('<int:restaurant_id>/reviews/', ReviewCreate.as_view(), name='review-create'),
