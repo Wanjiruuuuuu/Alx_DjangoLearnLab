@@ -1,10 +1,16 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.auth import get_user_model
 from django.db import models
 
-class Notification(models.Model):
-    user = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE)
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
+User = get_user_model()
 
-    def __str__(self):
-        return f'Notification for {self.user.username}: {self.message}'
+
+# Create your models here.
+class Notification(models.Model):
+    recipient = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="recipients"
+    )
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="actors")
+    verb = models.CharField(max_length=255)
+    target = GenericForeignKey("target", "object_id")
+    timestamp = models.DateTimeField(auto_now_add=True)
