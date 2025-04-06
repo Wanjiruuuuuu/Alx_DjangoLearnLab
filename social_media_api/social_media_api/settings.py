@@ -24,8 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-x86@vez6gs^wgqvcsgh%oji^vwnl3v3^56g+7cll+p$s(*mo8m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -44,7 +43,6 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "posts",
     "notifications",
-
 ]
 
 MIDDLEWARE = [
@@ -84,11 +82,11 @@ WSGI_APPLICATION = "social_media_api.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME", default="your_default_db"),
-        "USER": config("USER", default="your_default_user"),
-        "PASSWORD": config("C0operative", default="your_default_password"),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="5432"),
+        "NAME": "mydb",
+        "USER": config("USER"),
+        "PASSWORD": config("PASSWORD"),
+        "HOST": config("HOST"),
+        "PORT": config("PORT"),
     }
 }
 
@@ -128,7 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = [BASE_DIR / "staticfiles"]
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
@@ -147,7 +145,6 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
 }
-
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 SECURE_SSL_REDIRECT = True
