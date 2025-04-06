@@ -1,5 +1,6 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db import models
+
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
@@ -20,7 +21,7 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.dish
 
-class Customer(models.Model):
+class Customer(AbstractUser):
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)  # Hashed password
@@ -36,5 +37,3 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review by {self.customer.username} for {self.restaurant.name}"
-
-# Create your models here.

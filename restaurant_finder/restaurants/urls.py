@@ -1,12 +1,17 @@
-from django.urls import path
-from .views import RestaurantList, RestaurantDetail, MenuItemList, ReviewCreate, RestaurantRecommendations
-from .views import restaurant_page
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import CustomerList, RestaurantList, RestaurantDetail, MenuItemList, ReviewCreate, RestaurantRecommendations
+
+
+router = DefaultRouter()
+router.register(r'', RestaurantList, basename='restaurant-list')
 
 urlpatterns = [
-    path('restaurants/', RestaurantList.as_view(), name='restaurant-list'),
-    path('restaurants/<int:pk>/', RestaurantDetail.as_view(), name='restaurant-detail'),
-    path('restaurants/<int:restaurant_id>/menu/', MenuItemList.as_view(), name='menu-list'),
-    path('restaurants/<int:restaurant_id>/reviews/', ReviewCreate.as_view(), name='review-create'),
-    path('api/recommendations/', RestaurantRecommendations.as_view()),
-    path('view/restaurants/', restaurant_page, name='restaurant-page'),
+    # path('restaurants/', RestaurantList.as_view(), name='restaurant-list'),
+    path('<int:pk>/', RestaurantDetail.as_view(), name='restaurant-detail'),
+    path('<int:restaurant_id>/menu/', MenuItemList.as_view(), name='menu-list'),
+    path('<int:restaurant_id>/reviews/', ReviewCreate.as_view(), name='review-create'),
+    path('customers/', CustomerList.as_view(), name='customers-create'),
+    path('recommendations/', RestaurantRecommendations.as_view()),
+    path('', include(router.urls)),
 ] 

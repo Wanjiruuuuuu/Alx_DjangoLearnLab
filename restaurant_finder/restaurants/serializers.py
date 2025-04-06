@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Restaurant, MenuItem, Review
+from .models import Restaurant, MenuItem, Review, Customer
 
 class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,3 +19,8 @@ class RestaurantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Restaurant
         fields = ['id', 'name', 'location', 'cuisine', 'price_range', 'rating', 'menu_items', 'reviews']
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['id', 'username', 'email', 'password']
