@@ -1,49 +1,30 @@
-# 🍽️ Restaurant Finder App
+ Restaurant Finder App
 
-The **Restaurant Finder App** helps users easily discover restaurants based on location, budget, and preferences such as outdoor seating, live music, and more. Users can view restaurant profiles, including images, menus, customer reviews, and a map of the location.
+A simple web app that helps users find restaurants based on location, cuisine, and price range.
 
----
+ Features
 
-## 🔧 Features
+- List of restaurants with details
+- Filter by cuisine and max price
+- API built with Django REST Framework
+- JWT authentication for secure access
+- Simple HTML frontend for display
 
-- 🔍 **Search & Filter Restaurants** by:
-  - Location
-  - Budget
-  - Alphabetical order
-  - Tags (e.g., family-friendly, live music, vegan, etc.)
+Tech Stack
 
-- 🗺️ **Map Integration** to view restaurant location on the profile page
+- Django & Django REST Framework
+- SQLite (default) or any preferred DB
+- HTML/CSS (basic template)
+- JWT for auth (via SimpleJWT)
 
-- 📸 **Restaurant Profiles** displaying:
-  - Menu images
-  - Reviews
-  - Tags and features
+ Setup
 
-- ❤️ **User-friendly interface** for easy navigation and selection
+1. Clone the repo  
+2. Run `pip install -r requirements.txt`  
+3. Apply migrations: `python manage.py migrate`  
+4. Create a superuser: `python manage.py createsuperuser`  
+5. Start server: `python manage.py runserver`  
+6. Visit: `http://127.0.0.1:8000/`
 
----
 
-## 🛠️ Tech Stack
 
-- **Frontend**: Flutter
-- **Backend**: Firebase (authentication + Firestore database)
-- **Image Storage**: Firebase Storage
-- **APIs**: (Optional) Free third-party APIs for restaurant data *(under research)*
-
----
-
-## 📁 Project Structure
-
-```plaintext
-lib/
-├── main.dart
-├── screens/
-│   ├── home_screen.dart
-│   ├── restaurant_profile.dart
-├── widgets/
-│   ├── search_bar.dart
-│   ├── filter_tags.dart
-├── models/
-│   ├── restaurant_model.dart
-├── services/
-│   ├── firebase_service.dart
