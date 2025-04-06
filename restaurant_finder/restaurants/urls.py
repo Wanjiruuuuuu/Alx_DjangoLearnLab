@@ -3,15 +3,11 @@ from rest_framework.routers import DefaultRouter
 from .views import CustomerList, RestaurantList, RestaurantDetail, MenuItemList, ReviewCreate, RestaurantRecommendations
 
 
-router = DefaultRouter()
-router.register(r'', RestaurantList, basename='restaurant-list')
-
 urlpatterns = [
-    # path('restaurants/', RestaurantList.as_view(), name='restaurant-list'),
+    path('restaurants/', RestaurantList.as_view(), name='restaurant-list'),
     path('<int:pk>/', RestaurantDetail.as_view(), name='restaurant-detail'),
     path('<int:restaurant_id>/menu/', MenuItemList.as_view(), name='menu-list'),
     path('<int:restaurant_id>/reviews/', ReviewCreate.as_view(), name='review-create'),
     path('customers/', CustomerList.as_view(), name='customers-create'),
     path('recommendations/', RestaurantRecommendations.as_view()),
-    path('', include(router.urls)),
 ] 

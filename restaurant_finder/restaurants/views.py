@@ -10,7 +10,7 @@ from rest_framework.renderers import JSONRenderer
 from .models import Restaurant, Customer
 
 
-class RestaurantList(viewsets.ModelViewSet):
+class RestaurantList(generics.ListCreateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]  # Allows viewing without login, but requires auth for adding
