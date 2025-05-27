@@ -12,7 +12,7 @@ The **Restaurant Finder App** helps users easily discover restaurants based on l
   - Alphabetical order
   - Tags (e.g., family-friendly, live music, vegan, etc.)
 
-- 🗺️ **Map Integration** to view restaurant location on the profile page
+- 🗺️ **Map Integration** to view restaurant location on the profile page (in progress)
 
 - 📸 **Restaurant Profiles** displaying:
   - Menu images
@@ -22,28 +22,3 @@ The **Restaurant Finder App** helps users easily discover restaurants based on l
 - ❤️ **User-friendly interface** for easy navigation and selection
 
 ---
-
-## 🛠️ Tech Stack
-
-- **Frontend**: Flutter
-- **Backend**: Firebase (authentication + Firestore database)
-- **Image Storage**: Firebase Storage
-- **APIs**: (Optional) Free third-party APIs for restaurant data *(under research)*
-
----
-
-## 📁 Project Structure
-
-```plaintext
-lib/
-├── main.dart
-├── screens/
-│   ├── home_screen.dart
-│   ├── restaurant_profile.dart
-├── widgets/
-│   ├── search_bar.dart
-│   ├── filter_tags.dart
-├── models/
-│   ├── restaurant_model.dart
-├── services/
-│   ├── firebase_service.dart
